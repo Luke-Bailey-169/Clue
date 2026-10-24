@@ -3,6 +3,11 @@ package experiment;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Mel
+ * 
+ * TestBoardCell
+ */
 public class TestBoardCell {
 	int row;
 	int column;
