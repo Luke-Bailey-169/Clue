@@ -15,15 +15,15 @@ public class TestBoard {
 		// empty constuctor
 	}
 
-	void calcTargets(TestBoardCell startCell, int pathLength) {
+	public void calcTargets(TestBoardCell startCell, int pathLength) {
 		// does nothing
 	}
 
-	TestBoardCell getCell(int row, int col) {
+	public TestBoardCell getCell(int row, int col) {
 		return new TestBoardCell(row, col);
 	}
 
-	Set<TestBoardCell> getTargets() {
+	public Set<TestBoardCell> getTargets() {
 		return new HashSet<TestBoardCell>();
 	}
 }

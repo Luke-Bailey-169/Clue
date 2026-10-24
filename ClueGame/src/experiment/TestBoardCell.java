@@ -33,7 +33,7 @@ public class TestBoardCell {
 	}
 	
 	// Sets the boolean that tracks if this cell is part of a room
-	public void setRoom(boolean room) {
+	public void setIsRoom(boolean room) {
 		isRoom = room;
 	}
 	
