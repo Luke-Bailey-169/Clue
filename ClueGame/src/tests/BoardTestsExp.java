@@ -11,6 +11,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * @author Ryan Steinglass
+ * @author Luke Bailey
+ * 
+ * BoardTestsExp
+ */
 
 public class BoardTestsExp {
 	TestBoard board;
@@ -18,6 +24,45 @@ public class BoardTestsExp {
 	@BeforeEach
 	public void setup() { // Reset testBoard before each test
 		board = new TestBoard();
+	}
+
+	// Adjacency List Creation Tests
+
+	// top left corner [0][0]
+	@Test
+	public void testAdjacencyListTopLeft() {
+		Set<TestBoardCell> adjList = board.getCell(0, 0).getAdjList();
+		assertEquals(2, adjList.size());
+		assertTrue(adjList.contains(board.getCell(1, 0)));
+		assertTrue(adjList.contains(board.getCell(0, 1)));
+	}
+
+	// bottom right corner [3][3]
+	@Test
+	public void testAdjacencyListBottomRight() {
+		Set<TestBoardCell> adjList = board.getCell(3, 3).getAdjList();
+		assertEquals(2, adjList.size());
+		assertTrue(adjList.contains(board.getCell(2, 3)));
+		assertTrue(adjList.contains(board.getCell(3, 2)));
+	}
+
+	// right edge [1][3]
+	@Test
+	public void testAdjacencyListRightEdge() {
+		Set<TestBoardCell> adjList = board.getCell(1, 3).getAdjList();
+		assertEquals(3, adjList.size());
+		assertTrue(adjList.contains(board.getCell(0, 3)));
+		assertTrue(adjList.contains(board.getCell(2, 3)));
+		assertTrue(adjList.contains(board.getCell(1, 2)));
+	}
+
+	// left edge [3][0]
+	@Test
+	public void testAdjacencyListLeftEdge() {
+		Set<TestBoardCell> adjList = board.getCell(3, 0).getAdjList();
+		assertEquals(2, adjList.size());
+		assertTrue(adjList.contains(board.getCell(2, 0)));
+		assertTrue(adjList.contains(board.getCell(3, 1)));
 	}
 	
 	
@@ -121,6 +166,4 @@ public class BoardTestsExp {
 		assertTrue(targets.contains(board.getCell(2, 2)));
 		assertTrue(targets.contains(board.getCell(3, 3)));
 	}
-	
-
 }
