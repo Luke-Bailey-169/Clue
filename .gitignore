@@ -1,5 +1,7 @@
-.settings
-.classpath
-.project
+ClueGame/.settings
+ClueGame/.classpath
+ClueGame/.project
 *.class
-bin
+GlueGame/bin
+.vscode
+settings.json
