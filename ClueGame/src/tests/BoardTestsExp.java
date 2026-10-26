@@ -64,6 +64,17 @@ public class BoardTestsExp {
 		assertTrue(adjList.contains(board.getCell(2, 0)));
 		assertTrue(adjList.contains(board.getCell(3, 1)));
 	}
+
+	// middle cell [1][1]
+	@Test
+	public void testAdjacencyListMiddle() {
+		Set<TestBoardCell> adjList = board.getCell(1, 1).getAdjList();
+		assertEquals(4, adjList.size());
+		assertTrue(adjList.contains(board.getCell(1, 0)));
+		assertTrue(adjList.contains(board.getCell(0, 1)));
+		assertTrue(adjList.contains(board.getCell(2, 1)));
+		assertTrue(adjList.contains(board.getCell(1, 2)));
+	}
 	
 	
 	// Target Creation Tests
