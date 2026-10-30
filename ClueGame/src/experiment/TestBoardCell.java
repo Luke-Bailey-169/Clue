@@ -9,11 +9,11 @@ import java.util.Set;
  * TestBoardCell
  */
 public class TestBoardCell {
-	int row;
-	int column;
-	Set<TestBoardCell> adjList;
-	boolean isRoom;
-	boolean isOccupied;
+	private int row;
+	private int column;
+	private Set<TestBoardCell> adjList;
+	private boolean isRoom;
+	private boolean isOccupied;
 
 	// Constructor that gives adjList a place in memory and sets row and column for this cell 
 	public TestBoardCell(int rowNum, int columnNum) {
@@ -50,6 +50,11 @@ public class TestBoardCell {
 	// Gets if this cell is occupied
 	public boolean getOccupied() {
 		return isOccupied;
+	}
+
+	@Override
+	public String toString() {
+		return "TestBoardCell [row=" + row + ", column=" + column + "]";
 	}
 
 }

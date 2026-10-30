@@ -103,7 +103,7 @@ public class BoardTestsExp {
 	
 	// Test for rolling a 6 with no obstacles
 	@Test
-	public void testTargetsEmpptySix() { 
+	public void testTargetsEmptySix() { 
 		TestBoardCell cell = board.getCell(0, 0);
 		
 		board.calcTargets(cell, 6);
