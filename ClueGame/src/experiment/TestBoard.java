@@ -58,46 +58,41 @@ public class TestBoard {
 	 * @param pathLength the number of cells you must move that turn
 	 */
 	public void calcTargets(TestBoardCell startCell, int pathLength) {
-		System.out.println("\n\n\n");
-		System.out.println(startCell + " " + pathLength);
-		
-		
 		targets.clear();
 		visited.clear();
 
-		visited.add(startCell);
-		
-		Set<TestBoardCell> tempVisited = new HashSet<TestBoardCell>();
+		calcTargetsHelper(startCell, pathLength);
+	}
 
-		// for all steps excluding the last
-		for (int i = 0; i < pathLength - 1; i++) {
-			// for each visited cell
-			for (TestBoardCell visitedCell : visited) {
-				// add its adjacent cells to visited
-				Set<TestBoardCell> adjList = visitedCell.getAdjList();
-				for (TestBoardCell adjCell : adjList) {
-					if (!adjCell.getOccupied() && !adjCell.isRoom()) {
-						tempVisited.add(adjCell);
-					}
-				}
-			}
-			for (TestBoardCell cell : tempVisited) {
-				visited.add(cell);
-			}
-			
-			System.out.println(visited);
+	/**
+	 * Helper method for calcTargets() to perform the recursion
+	 * 
+	 * @param currentCell the cell you are currently on during your movement
+	 * @param pathLength the number of remaining steps you have this turn
+	 */
+	private void calcTargetsHelper(TestBoardCell currentCell, int pathLength) {
+		// Base case
+		if (pathLength == 0) {
+			targets.add(currentCell);
+			return;
 		}
-		
 
-		// final step of movement
-		for (TestBoardCell visitedCell : visited) {
-			Set<TestBoardCell> adjList = visitedCell.getAdjList();
-			for (TestBoardCell adjCell : adjList) {
-				if (!visited.contains(adjCell) && !adjCell.getOccupied()) {
-					targets.add(adjCell);
+		visited.add(currentCell);  // add the current cell to visited
+
+		// recursively call the method on all adjacent cells, as long as the cell can be entered
+		for (TestBoardCell adjCell : currentCell.getAdjList()) {
+			if (!adjCell.getOccupied() && !visited.contains(adjCell)) {
+
+				// if the cell is a room, use all remaining movement to enter it
+				if (!adjCell.isRoom()) {
+					calcTargetsHelper(adjCell, pathLength - 1);
+				} else {
+					calcTargetsHelper(adjCell, 0);
 				}
 			}
 		}
+
+		visited.remove(currentCell);  // remove the current cell from visited
 	}
 
 	public TestBoardCell getCell(int row, int col) {
