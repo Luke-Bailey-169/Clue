@@ -1,5 +1,10 @@
 package clueGame;
 
+/**
+ * @author Ryan Steinglass
+ * 
+ * Room
+ */
 public class Room {
 	private String name;
 	private BoardCell centerCell;

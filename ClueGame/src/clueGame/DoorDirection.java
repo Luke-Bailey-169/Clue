@@ -1,5 +1,10 @@
 package clueGame;
 
+/**
+ * @author Ryan Steinglass
+ * 
+ * DoorDirection
+ */
 public enum DoorDirection {
     UP,
     DOWN,
