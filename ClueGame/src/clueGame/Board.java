@@ -1,6 +1,10 @@
 package clueGame;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * @author Ryan Steinglass
@@ -61,10 +65,30 @@ public class Board {
 	}
 
 	/**
-	 * loads the layout config
+	 * Creates and populates the board using layoutConfigFile
 	 */
 	public void loadLayoutConfig() {
-		// TODO
+		// read the input file into an ArrayList of strings
+		File layoutFile = new File(layoutConfigFile);
+
+		ArrayList<String> lines = new ArrayList<String>();
+
+		try (Scanner reader = new Scanner(layoutFile)) {
+			while (reader.hasNextLine()) {
+				lines.add(reader.nextLine());
+			}
+		} catch (FileNotFoundException e) {
+			// TODO exception stuff
+			System.out.println(e.getMessage());
+			return;
+		}
+
+		// set numRows and numColumns
+		numColumns = lines.get(0).split(",").length;
+		numRows = lines.size();
+
+		// TODO create and populate the grid
+		grid = new BoardCell[numRows][numColumns];
 	}
 
 
