@@ -31,7 +31,8 @@ public class Board {
 	 * initialize the board (since we are using singleton pattern)
 	 */
 	public void initialize() {
-		// TODO
+		loadSetupConfig();
+		loadLayoutConfig();
 	}
 
 
