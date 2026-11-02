@@ -42,6 +42,17 @@ public class Board {
 	*/
 
 	/**
+	 * Sets the config files
+	 * 
+	 * @param layoutConfigFile csv file
+	 * @param setupConfigFile txt file
+	 */
+	public void setConfigFiles(String layoutConfigFile, String setupConfigFile) {
+		this.layoutConfigFile = layoutConfigFile;
+		this.setupConfigFile = setupConfigFile;
+	}
+
+	/**
 	 * loads the setup config
 	 */
 	public void loadSetupConfig() {
@@ -54,4 +65,34 @@ public class Board {
 	public void loadLayoutConfig() {
 		// TODO
 	}
+
+
+	/*
+	--------------------------------------------------
+					Getters/Setters
+	--------------------------------------------------
+	*/
+
+	public int getNumRows() {
+		return numRows;
+	}
+
+	public int getNumColumns() {
+		return numColumns;
+	}
+
+	// TODO
+	public Room getRoom(BoardCell room) {
+		return new Room("temp room", room, room);
+	}
+
+	// TODO
+	public Room getRoom(char roomInitial) {
+		return new Room("temp room", new BoardCell(0, 0, roomInitial), new BoardCell(0, 0, roomInitial));
+	}
+
+	public BoardCell getCell(int row, int col) {
+		return grid[row][col];
+	}
+
 }
