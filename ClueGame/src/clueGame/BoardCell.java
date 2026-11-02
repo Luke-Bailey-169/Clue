@@ -18,6 +18,8 @@ public class BoardCell {
 	private char secretPassage;
 	private Set<BoardCell> adjList;
 
+	private boolean isRoom = false;
+	private boolean isOccupied = false;
 
 	/*
 	--------------------------------------------------
@@ -134,5 +136,34 @@ public class BoardCell {
 
 	public boolean isDoorway() {
 		return (doorDirection != DoorDirection.NONE);
+	}
+
+	// Sets the boolean that tracks if this cell is part of a room
+	public void setIsRoom(boolean room) {
+		isRoom = room;
+	}
+
+	// Gets the isRoom boolean
+	public boolean isRoom() {
+		return isRoom;
+	}
+
+	// Sets the boolean that tracks if this cell is occupied by a player
+	public void setOccupied(boolean occupied) {
+		isOccupied = occupied;
+	}
+
+	// Gets if this cell is occupied
+	public boolean isOccupied() {
+		return isOccupied;
+	}
+
+
+	/**
+	 * toString method
+	 */
+	@Override
+	public String toString() {
+		return "TestBoardCell [row=" + row + ", column=" + col + "]";
 	}
 }
