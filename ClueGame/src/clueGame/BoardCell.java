@@ -100,13 +100,39 @@ public class BoardCell {
 	--------------------------------------------------
 	*/
 	
-	public int getRow() { return row; }
-	public int getCol() { return col; }
-	public char getInitial() { return initial; }
-	public DoorDirection getDoorDirection() { return doorDirection; }
-	public boolean isRoomLabel() { return roomLabel; }
-	public boolean isRoomCenter() { return roomCenter; }
-	public char getSecretPassage() { return secretPassage; }
-	public Set<BoardCell> getAdjList() { return adjList; }
+	public int getRow() {
+		return row;
+	}
 
+	public int getCol() {
+		return col;
+	}
+
+	public char getInitial() {
+		return initial;
+	}
+
+	public DoorDirection getDoorDirection() {
+		return doorDirection;
+	}
+
+	public char getSecretPassage() {
+		return secretPassage;
+	}
+
+	public Set<BoardCell> getAdjList() {
+		return adjList;
+	}
+
+	public boolean isLabel() {
+		return roomLabel;
+	}
+
+	public boolean isRoomCenter() {
+		return roomCenter;
+	}
+
+	public boolean isDoorway() {
+		return (doorDirection != DoorDirection.NONE);
+	}
 }
