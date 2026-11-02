@@ -91,8 +91,54 @@ public class Board {
 		numColumns = lines.get(0).split(",").length;
 		numRows = lines.size();
 
-		// TODO create and populate the grid
+		// create and populate the grid
 		grid = new BoardCell[numRows][numColumns];
+
+		for (int row = 0; row < numRows; row++) {
+			String[] line = lines.get(row).split(",");
+
+			for (int col = 0; col < numColumns; col++) {
+				String cellString = line[col];
+
+				char initial = cellString.charAt(0);
+				Room room = roomMap.get(initial);
+
+				// set default values for fields involving special properties
+				DoorDirection doorDirection = DoorDirection.NONE;
+				boolean roomCenter = false;
+				boolean roomLabel = false;
+				char secretPassage = '\0';	// default value so it can be passed to the BoardCell constructor
+
+				// if the cell has a special property (ex. door, room center, secret passage, etc.)
+				// then set the appropriate variables.
+				if (cellString.length() == 2) {
+					switch (cellString.charAt(1)) {
+						case '^':	// up door
+							doorDirection = DoorDirection.UP;
+							break;
+						case '>':	// right door
+							doorDirection = DoorDirection.RIGHT;
+							break;
+						case 'v':	// down door
+							doorDirection = DoorDirection.DOWN;
+							break;
+						case '<':	// left door
+							doorDirection = DoorDirection.LEFT;
+							break;
+						case '*':	// room center
+							roomCenter = true;
+							break;
+						case '#':	// room label
+							roomLabel = true;
+							break;
+						default:	// secret passage
+							secretPassage = cellString.charAt(1);
+					}
+				}
+
+				grid[row][col] = new BoardCell(row, col, initial, doorDirection, roomLabel, roomCenter, secretPassage);
+			}
+		}
 	}
 
 	/**
