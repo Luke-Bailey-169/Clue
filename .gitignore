@@ -6,3 +6,4 @@ GlueGame/bin
 .vscode
 settings.json
 gitlog.txt
+*.zip
