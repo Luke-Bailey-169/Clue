@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Set;
+
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * @author Ryan Steinglass
@@ -23,6 +26,9 @@ public class Board {
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
 
+	private char unusedInitial;
+	private char walkwayInitial;
+
 	/*
 	 * variable and methods used for singleton pattern
 	 */
@@ -39,8 +45,14 @@ public class Board {
 	 * initialize the board (since we are using singleton pattern)
 	 */
 	public void initialize() {
-		loadSetupConfig();
-		loadLayoutConfig();
+		try {
+			loadSetupConfig();
+			loadLayoutConfig();
+		} catch (Exception e) {
+			return;
+		}
+
+		setAdjacencies();
 	}
 
 
@@ -64,14 +76,40 @@ public class Board {
 	/**
 	 * loads the setup config
 	 */
-	public void loadSetupConfig() {
-		// TODO
+	public void loadSetupConfig() throws FileNotFoundException, BadConfigFormatException {
+		// initialize the roomMap
+		roomMap = new HashMap<Character, Room>();
+
+		// read the input file
+		File setupFile = new File(setupConfigFile);
+
+		try (Scanner reader = new Scanner(setupFile)) {
+			while (reader.hasNextLine()) {
+				String[] line = reader.nextLine().split(", ");
+
+				if (line.length == 1) {
+					continue;
+				}
+
+				if (line[0].equals("Room")) {
+					// make a room
+					Room room = new Room(line[1]);
+					roomMap.put(line[2].charAt(0), room);
+				} else if (line[1].equals("Unused")) {
+					unusedInitial = line[2].charAt(0);
+				} else if (line[1].equals("Walkway")) {
+					walkwayInitial = line[2].charAt(0);
+				}
+			}
+		} catch (FileNotFoundException e) {
+			throw e;
+		}
 	}
 
 	/**
 	 * Creates and populates the board using layoutConfigFile
 	 */
-	public void loadLayoutConfig() {
+	public void loadLayoutConfig() throws FileNotFoundException, BadConfigFormatException {
 		// read the input file into an ArrayList of strings
 		File layoutFile = new File(layoutConfigFile);
 
@@ -82,9 +120,7 @@ public class Board {
 				lines.add(reader.nextLine());
 			}
 		} catch (FileNotFoundException e) {
-			// TODO exception stuff
-			System.out.println(e.getMessage());
-			return;
+			throw e;
 		}
 
 		// set numRows and numColumns
@@ -101,7 +137,6 @@ public class Board {
 				String cellString = line[col];
 
 				char initial = cellString.charAt(0);
-				Room room = roomMap.get(initial);
 
 				// set default values for fields involving special properties
 				DoorDirection doorDirection = DoorDirection.NONE;
@@ -137,6 +172,94 @@ public class Board {
 				}
 
 				grid[row][col] = new BoardCell(row, col, initial, doorDirection, roomLabel, roomCenter, secretPassage);
+				grid[row][col].setIsRoom(roomMap.containsKey(initial));
+			}
+		}
+	}
+
+	/**
+	 * Sets the adjacency lists for all the cells
+	 */
+	private void setAdjacencies() {
+		// set up adjacency lists
+		for (int row = 0; row < numRows; row++) {
+			for (int col = 0; col < numColumns; col++) {
+				BoardCell cell = getCell(row, col);
+
+
+				// proccess adjacent cells for walkways
+				if (cell.getInitial() == walkwayInitial) {
+					// left
+					if ((row - 1) >= 0) {
+						BoardCell adj = getCell(row - 1, col);
+
+						if (adj.getInitial() == cell.getInitial() && !adj.isRoom()) {
+							cell.addAdj(adj);
+						}
+					}
+
+					// right
+					if ((row + 1) < numRows) {
+						BoardCell adj = getCell(row + 1, col);
+
+						if (adj.getInitial() == cell.getInitial() && !adj.isRoom()) {
+							cell.addAdj(adj);
+						}
+					}
+
+					// up
+					if ((col - 1) >= 0) {
+						BoardCell adj = getCell(row, col - 1);
+
+						if (adj.getInitial() == cell.getInitial() && !adj.isRoom()) {
+							cell.addAdj(adj);
+						}
+					}
+
+					// down
+					if ((col + 1) < numColumns) {
+						BoardCell adj = getCell(row, col + 1);
+
+						if (adj.getInitial() == cell.getInitial() && !adj.isRoom()) {
+							cell.addAdj(adj);
+						}
+					}
+				}
+
+
+				// proccess doorways
+				if (cell.isDoorway()) {
+					Room adjRoom = null;
+
+					switch (cell.getDoorDirection()) {
+						case DoorDirection.LEFT:
+							adjRoom = getRoom(getCell(row - 1, col));
+							break;
+						case DoorDirection.RIGHT:
+							adjRoom = getRoom(getCell(row + 1, col));
+							break;
+						case DoorDirection.UP:
+							adjRoom = getRoom(getCell(row, col - 1));
+							break;
+						case DoorDirection.DOWN:
+							adjRoom = getRoom(getCell(row, col + 1));
+							break;
+						case DoorDirection.NONE:
+							break;
+					}
+
+					BoardCell target = adjRoom.getCenterCell();
+
+					cell.addAdj(target);
+					target.addAdj(cell);
+				}
+
+				// proccess secret passages
+				if (cell.getSecretPassage() != '\0') {
+					BoardCell adjSecret = getRoom(cell.getSecretPassage()).getCenterCell();
+					cell.addAdj(adjSecret);
+					adjSecret.addAdj(cell);
+				}
 			}
 		}
 	}
@@ -193,24 +316,53 @@ public class Board {
 	--------------------------------------------------
 	*/
 
+	/**
+	 * @return the number of rows in the board
+	 */
 	public int getNumRows() {
 		return numRows;
 	}
 
+	/**
+	 * @return the number of columns in the board
+	 */
 	public int getNumColumns() {
 		return numColumns;
 	}
 
-	// TODO
-	public Room getRoom(BoardCell room) {
-		return new Room("temp room", room, room);
+	/**
+	 * gets the list of target cells calculated by calcTargets()
+	 * 
+	 * @return the list of target cells
+	 */
+	public Set<BoardCell> getTargets() {
+		return targets;
 	}
 
-	// TODO
+	/**
+	 * gets the room of a given cell
+	 * 
+	 * @return the room to which the given cell belongs
+	 */
+	public Room getRoom(BoardCell cell) {
+		return getRoom(cell.getInitial());
+	}
+
+	/**
+	 * gets the room with the given initial
+	 * 
+	 * @param roomInitial the initial of the room
+	 * @return the room object corresponding to the given initial
+	 */
 	public Room getRoom(char roomInitial) {
-		return new Room("temp room", new BoardCell(0, 0, roomInitial), new BoardCell(0, 0, roomInitial));
+		return roomMap.get(roomInitial);
 	}
 
+	/**
+	 * gets the BoardCell at the given location
+	 * 
+	 * @return the BoardCell instance
+	 */
 	public BoardCell getCell(int row, int col) {
 		return grid[row][col];
 	}

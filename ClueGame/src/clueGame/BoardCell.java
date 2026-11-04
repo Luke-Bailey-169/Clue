@@ -23,62 +23,26 @@ public class BoardCell {
 
 	/*
 	--------------------------------------------------
-					Constructors
+					   Constructor
 	--------------------------------------------------
 	*/
-
-	/**
-	 * Constructor for board cells that are walkways
-	 */
-	public BoardCell(int row, int col, char initial) {
-		constructerHelper(row, col, initial);
-	}
-
-	/**
-	 * Constructor for board cells in a room
-	 */
-	public BoardCell(int row, int col, char initial, boolean roomLabel, boolean roomCenter, char secretPassage) {
-		constructerHelper(row, col, initial);
-		
-		this.roomLabel = roomLabel;
-		this.roomCenter = roomCenter;
-		this.secretPassage = secretPassage;
-	}
-	
-	/**
-	 * Constructor for board cells that are doors
-	 */
-	public BoardCell(int row, int col, char initial, DoorDirection doorDirection) {
-		constructerHelper(row, col, initial);
-		
-		this.doorDirection = doorDirection;
-	}
 
 	/**
 	 * Constructor that includes all inputs
 	 */
 	public BoardCell(int row, int col, char initial, DoorDirection doorDirection, boolean roomLabel, boolean roomCenter, char secretPassage) {
-		constructerHelper(row, col, initial);
+		this.row = row;
+		this.col = col;
+		this.initial = initial;
 		
 		this.doorDirection = doorDirection;
 		this.roomLabel = roomLabel;
 		this.roomCenter = roomCenter;
 		this.secretPassage = secretPassage;
-	}
-
-	// Helper method to cut down on repeated code in the many BoardCell constructors
-	private void constructerHelper(int row, int col, char initial) {
-		this.row = row;
-		this.col = col;
-		this.initial = initial;
-		
-		this.doorDirection = DoorDirection.NONE;
-		this.roomLabel = false;
-		this.roomCenter = false;
 
 		adjList = new HashSet<BoardCell>();
 	}
-
+	
 
 	/*
 	--------------------------------------------------

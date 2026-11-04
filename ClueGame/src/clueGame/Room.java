@@ -10,9 +10,17 @@ public class Room {
 	private BoardCell centerCell;
 	private BoardCell labelCell;
 
-	public Room(String name, BoardCell centerCell, BoardCell labelCell) {
+	public Room(String name) {
 		this.name = name;
+		this.centerCell = null;
+		this.labelCell = null;
+	}
+
+	public void setCenterCell(BoardCell centerCell) {
 		this.centerCell = centerCell;
+	}
+
+	public void setLabelCell(BoardCell labelCell) {
 		this.labelCell = labelCell;
 	}
 
