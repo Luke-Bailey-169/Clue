@@ -42,6 +42,9 @@ public class Board {
 	 * initialize the board (since we are using singleton pattern)
 	 */
 	public void initialize() {
+		this.targets = new HashSet<BoardCell>();
+		this.visited = new HashSet<BoardCell>();
+
 		try {
 			loadSetupConfig();
 			loadLayoutConfig();
@@ -368,4 +371,7 @@ public class Board {
 		return grid[row][col];
 	}
 
+	public Set<BoardCell> getAdjList(int row, int col) {
+		return grid[row][col].getAdjList();
+	}
 }
