@@ -1,0 +1,13 @@
+// Rooms and room cards
+Room, Mushroom, M
+Room, Greenhouse, G
+Room, Flower Garden, F
+Room, Fountain, H
+Room, Cave, C
+Room, Potion Brewery, P
+Room, Treehouse, T
+Room, Forest, R
+Room, Shed, S
+// other spaces on board
+Space, Unused, X
+Space, Walkway, W
