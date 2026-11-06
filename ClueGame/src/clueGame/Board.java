@@ -26,9 +26,6 @@ public class Board {
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
 
-	private char unusedInitial;
-	private char walkwayInitial;
-
 	/*
 	 * variable and methods used for singleton pattern
 	 */
@@ -52,7 +49,7 @@ public class Board {
 			return;
 		}
 
-		setAdjacencies();
+//		setAdjacencies();
 	}
 
 
@@ -69,8 +66,8 @@ public class Board {
 	 * @param setupConfigFile txt file
 	 */
 	public void setConfigFiles(String layoutConfigFile, String setupConfigFile) {
-		this.layoutConfigFile = layoutConfigFile;
-		this.setupConfigFile = setupConfigFile;
+		this.layoutConfigFile = "data/" + layoutConfigFile;
+		this.setupConfigFile = "data/" + setupConfigFile;
 	}
 
 	/**
@@ -91,14 +88,10 @@ public class Board {
 					continue;
 				}
 
-				if (line[0].equals("Room")) {
+				if (!line[0].equals("//")) {
 					// make a room
 					Room room = new Room(line[1]);
 					roomMap.put(line[2].charAt(0), room);
-				} else if (line[1].equals("Unused")) {
-					unusedInitial = line[2].charAt(0);
-				} else if (line[1].equals("Walkway")) {
-					walkwayInitial = line[2].charAt(0);
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -173,6 +166,14 @@ public class Board {
 
 				grid[row][col] = new BoardCell(row, col, initial, doorDirection, roomLabel, roomCenter, secretPassage);
 				grid[row][col].setIsRoom(roomMap.containsKey(initial));
+				
+				// Set room centers and labels
+				if (roomCenter) {
+					getRoom(initial).setCenterCell(grid[row][col]);
+				}
+				if (roomLabel) {
+					getRoom(initial).setLabelCell(grid[row][col]);
+				}
 			}
 		}
 	}
@@ -180,89 +181,89 @@ public class Board {
 	/**
 	 * Sets the adjacency lists for all the cells
 	 */
-	private void setAdjacencies() {
-		// set up adjacency lists
-		for (int row = 0; row < numRows; row++) {
-			for (int col = 0; col < numColumns; col++) {
-				BoardCell cell = getCell(row, col);
-
-
-				// proccess adjacent cells for walkways
-				if (cell.getInitial() == walkwayInitial) {
-					// left
-					if ((row - 1) >= 0) {
-						BoardCell adj = getCell(row - 1, col);
-
-						if (adj.getInitial() == cell.getInitial() && !adj.isRoom()) {
-							cell.addAdj(adj);
-						}
-					}
-
-					// right
-					if ((row + 1) < numRows) {
-						BoardCell adj = getCell(row + 1, col);
-
-						if (adj.getInitial() == cell.getInitial() && !adj.isRoom()) {
-							cell.addAdj(adj);
-						}
-					}
-
-					// up
-					if ((col - 1) >= 0) {
-						BoardCell adj = getCell(row, col - 1);
-
-						if (adj.getInitial() == cell.getInitial() && !adj.isRoom()) {
-							cell.addAdj(adj);
-						}
-					}
-
-					// down
-					if ((col + 1) < numColumns) {
-						BoardCell adj = getCell(row, col + 1);
-
-						if (adj.getInitial() == cell.getInitial() && !adj.isRoom()) {
-							cell.addAdj(adj);
-						}
-					}
-				}
-
-
-				// proccess doorways
-				if (cell.isDoorway()) {
-					Room adjRoom = null;
-
-					switch (cell.getDoorDirection()) {
-						case DoorDirection.LEFT:
-							adjRoom = getRoom(getCell(row - 1, col));
-							break;
-						case DoorDirection.RIGHT:
-							adjRoom = getRoom(getCell(row + 1, col));
-							break;
-						case DoorDirection.UP:
-							adjRoom = getRoom(getCell(row, col - 1));
-							break;
-						case DoorDirection.DOWN:
-							adjRoom = getRoom(getCell(row, col + 1));
-							break;
-						case DoorDirection.NONE:
-							break;
-					}
-
-					BoardCell target = adjRoom.getCenterCell();
-
-					cell.addAdj(target);
-					target.addAdj(cell);
-				}
-
-				// proccess secret passages
-				if (cell.getSecretPassage() != '\0') {
-					BoardCell adjSecret = getRoom(cell.getSecretPassage()).getCenterCell();
-					cell.addAdj(adjSecret);
-					adjSecret.addAdj(cell);
-				}
-			}
-		}
-	}
+//	private void setAdjacencies() {
+//		// set up adjacency lists
+//		for (int row = 0; row < numRows; row++) {
+//			for (int col = 0; col < numColumns; col++) {
+//				BoardCell cell = getCell(row, col);
+//
+//
+//				// proccess adjacent cells for walkways
+//				if (cell.getInitial() == walkwayInitial) {
+//					// left
+//					if ((row - 1) >= 0) {
+//						BoardCell adj = getCell(row - 1, col);
+//
+//						if (adj.getInitial() == cell.getInitial() && !adj.isRoom()) {
+//							cell.addAdj(adj);
+//						}
+//					}
+//
+//					// right
+//					if ((row + 1) < numRows) {
+//						BoardCell adj = getCell(row + 1, col);
+//
+//						if (adj.getInitial() == cell.getInitial() && !adj.isRoom()) {
+//							cell.addAdj(adj);
+//						}
+//					}
+//
+//					// up
+//					if ((col - 1) >= 0) {
+//						BoardCell adj = getCell(row, col - 1);
+//
+//						if (adj.getInitial() == cell.getInitial() && !adj.isRoom()) {
+//							cell.addAdj(adj);
+//						}
+//					}
+//
+//					// down
+//					if ((col + 1) < numColumns) {
+//						BoardCell adj = getCell(row, col + 1);
+//
+//						if (adj.getInitial() == cell.getInitial() && !adj.isRoom()) {
+//							cell.addAdj(adj);
+//						}
+//					}
+//				}
+//
+//
+//				// proccess doorways
+//				if (cell.isDoorway()) {
+//					Room adjRoom = null;
+//
+//					switch (cell.getDoorDirection()) {
+//						case DoorDirection.LEFT:
+//							adjRoom = getRoom(getCell(row - 1, col));
+//							break;
+//						case DoorDirection.RIGHT:
+//							adjRoom = getRoom(getCell(row + 1, col));
+//							break;
+//						case DoorDirection.UP:
+//							adjRoom = getRoom(getCell(row, col - 1));
+//							break;
+//						case DoorDirection.DOWN:
+//							adjRoom = getRoom(getCell(row, col + 1));
+//							break;
+//						case DoorDirection.NONE:
+//							break;
+//					}
+//
+//					BoardCell target = adjRoom.getCenterCell();
+//
+//					cell.addAdj(target);
+//					target.addAdj(cell);
+//				}
+//
+//				// proccess secret passages
+//				if (cell.getSecretPassage() != '\0') {
+//					BoardCell adjSecret = getRoom(cell.getSecretPassage()).getCenterCell();
+//					cell.addAdj(adjSecret);
+//					adjSecret.addAdj(cell);
+//				}
+//			}
+//		}
+//	}
 
 	/**
 	 * calculates the list of valid target cells for a turn's movement given a starting cell and path length

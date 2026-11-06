@@ -1,5 +1,5 @@
 // Rooms and room cards
-Room, Mushroom, M
+Room, Mush-room, M
 Room, Greenhouse, G
 Room, Flower Garden, F
 Room, Fountain, H

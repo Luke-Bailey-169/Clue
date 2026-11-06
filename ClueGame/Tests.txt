@@ -1,0 +1,6 @@
+For testRoomLabels, I just selected some of our rooms randomly
+
+For the doors, I found all the cells that had a certain door direction and selected one randomly
+
+For testRooms, I picked random rooms except for the cave room, because that room can only be entered through a secret passage so it needs to verify that it is there.
+I also added another secret passage check in the fountain to make sure that the cave and fountain are linked correctly
