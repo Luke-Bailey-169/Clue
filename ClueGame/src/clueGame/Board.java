@@ -92,6 +92,10 @@ public class Board {
 				}
 
 				if (!line[0].equals("//")) {
+					// Check for correct formatting
+					if (!line[0].equals("Room") && !line[0].equals("Space")) {
+						throw new BadConfigFormatException("Setup file formatted incorrectly");
+					}
 					// make a room
 					Room room = new Room(line[1]);
 					roomMap.put(line[2].charAt(0), room);
@@ -128,11 +132,20 @@ public class Board {
 
 		for (int row = 0; row < numRows; row++) {
 			String[] line = lines.get(row).split(",");
+			
+			// Check for board being rectangle
+			if (line.length != numColumns) {
+				throw new BadConfigFormatException("Board layout file does not contain the same number of columns in every row");
+			}
 
 			for (int col = 0; col < numColumns; col++) {
 				String cellString = line[col];
 
 				char initial = cellString.charAt(0);
+				
+				if (!roomMap.containsKey(initial)) {
+					throw new BadConfigFormatException("Layout file includes room that does not exist");
+				}
 
 				// set default values for fields involving special properties
 				DoorDirection doorDirection = DoorDirection.NONE;
