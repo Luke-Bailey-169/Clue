@@ -315,10 +315,10 @@ public class Board {
 			if (!adjCell.isOccupied() && !visited.contains(adjCell)) {
 
 				// if the cell is a room, use all remaining movement to enter it
-				if (!adjCell.isRoom()) {
-					calcTargetsHelper(adjCell, pathLength - 1);
-				} else {
+				if (adjCell.isRoom()) {
 					calcTargetsHelper(adjCell, 0);
+				} else {
+					calcTargetsHelper(adjCell, pathLength - 1);
 				}
 			}
 		}
