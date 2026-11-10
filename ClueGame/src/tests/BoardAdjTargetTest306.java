@@ -15,6 +15,7 @@ import clueGame.BoardCell;
 public class BoardAdjTargetTest306 {
 	// We make the Board static because we can load it one time and 
 	// then do all the tests. 
+	
 	private static Board board;
 	
 	@BeforeAll
@@ -290,6 +291,6 @@ public class BoardAdjTargetTest306 {
 		assertTrue(targets.contains(board.getCell(6, 17)));
 		assertTrue(targets.contains(board.getCell(8, 19)));	
 		assertTrue(targets.contains(board.getCell(8, 15)));
-
 	}
+	 
 }
