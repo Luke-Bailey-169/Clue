@@ -40,7 +40,7 @@ public class BoardAdjTargetTest {
 		assertTrue(testList.contains(board.getCell(23, 22)));
 
 		// now test the forest (note not marked since multiple test here)
-		testList = board.getAdjList(20, 11);
+		testList = board.getAdjList(6, 22);
 		assertEquals(8, testList.size());
 		assertTrue(testList.contains(board.getCell(2, 20)));
 
@@ -149,11 +149,11 @@ public class BoardAdjTargetTest {
 		assertEquals(5, targets.size());
 		assertTrue(targets.contains(board.getCell(21, 18)));
 		assertTrue(targets.contains(board.getCell(24, 19)));
-		assertTrue(targets.contains(board.getCell(12, 17)));
+		assertTrue(targets.contains(board.getCell(22, 17)));
 		assertTrue(targets.contains(board.getCell(8, 2)));
 
 		// test a roll of 4
-		board.calcTargets(board.getCell(20, 19), 4);
+		board.calcTargets(board.getCell(23, 22), 4);
 		targets = board.getTargets();
 		assertEquals(6, targets.size());
 		assertTrue(targets.contains(board.getCell(21, 19)));
@@ -227,25 +227,25 @@ public class BoardAdjTargetTest {
 		// test a roll of 1
 		board.calcTargets(board.getCell(13, 7), 1);
 		Set<BoardCell> targets = board.getTargets();
-		assertEquals(4, targets.size());
+		assertEquals(2, targets.size());
 		assertTrue(targets.contains(board.getCell(13, 6)));
 		assertTrue(targets.contains(board.getCell(12, 7)));
 
 		// test a roll of 3
 		board.calcTargets(board.getCell(13, 7), 3);
 		targets = board.getTargets();
-		assertEquals(10, targets.size());
-		assertTrue(targets.contains(board.getCell(15, 6)));
-		assertTrue(targets.contains(board.getCell(14, 7)));
+		assertEquals(9, targets.size());
+		assertTrue(targets.contains(board.getCell(13, 6)));
+		assertTrue(targets.contains(board.getCell(10, 7)));
 		assertTrue(targets.contains(board.getCell(11, 8)));
 
 		// test a roll of 4
 		board.calcTargets(board.getCell(13, 7), 4);
 		targets = board.getTargets();
-		assertEquals(15, targets.size());
-		assertTrue(targets.contains(board.getCell(14, 2)));
-		assertTrue(targets.contains(board.getCell(15, 9)));
-		assertTrue(targets.contains(board.getCell(11, 5)));
+		assertEquals(10, targets.size());
+		assertTrue(targets.contains(board.getCell(12, 6)));
+		assertTrue(targets.contains(board.getCell(11, 9)));
+		assertTrue(targets.contains(board.getCell(14, 4)));
 	}
 
 	@Test

@@ -119,7 +119,7 @@ public class BoardCell {
 
 	// Gets if this cell is occupied
 	public boolean isOccupied() {
-		return isOccupied;
+		return (roomCenter) ? false : isOccupied;
 	}
 
 
