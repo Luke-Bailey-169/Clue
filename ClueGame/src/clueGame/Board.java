@@ -207,7 +207,7 @@ public class Board {
 
 
 				// proccess adjacent cells for walkways
-				if (cell.getInitial() == 'W' && !cell.isDoorway()) {
+				if (cell.getInitial() == 'W') {
 					BoardCell adj = null;
 					// up
 					if ((row - 1) >= 0) {
@@ -330,8 +330,6 @@ public class Board {
 		}
 
 		visited.add(currentCell);  // add the current cell to visited
-
-		// NOTE: Needs to include the room if player starts on a doorway and that room is "occupied"
 		
 		// recursively call the method on all adjacent cells, as long as the cell can be entered
 		for (BoardCell adjCell : currentCell.getAdjList()) {
