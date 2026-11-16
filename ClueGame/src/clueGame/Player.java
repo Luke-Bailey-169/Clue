@@ -23,6 +23,8 @@ public abstract class Player {
 		hand.add(card);
 	}
 
+	public abstract boolean isHuman();
+
 	public String getName() { return name; }
 	public String getColor() { return color; }
 	public int getRow() { return row; }
