@@ -11,3 +11,8 @@ Room, Shed, S
 // other spaces on board
 Space, Unused, X
 Space, Walkway, W
+// players
+Human, h1, 14, 21
+Human, h2, 9, 12
+Computer, c1, 15, 2
+Computer, c2, 22, 8
