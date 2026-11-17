@@ -26,6 +26,9 @@ public class Board {
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
 
+	// map of player names and players
+	private Map<String, Player> players;
+
 	/*
 	 * variable and methods used for singleton pattern
 	 */
@@ -44,6 +47,7 @@ public class Board {
 	public void initialize() {
 		this.targets = new HashSet<BoardCell>();
 		this.visited = new HashSet<BoardCell>();
+		this.players = new HashMap<String, Player>();
 
 		try {
 			loadSetupConfig();
@@ -405,7 +409,14 @@ public class Board {
 		return grid[row][col];
 	}
 
+	/**
+	 * gets the adjacency list for the cell at the given location
+	 */
 	public Set<BoardCell> getAdjList(int row, int col) {
 		return grid[row][col].getAdjList();
+	}
+
+	public Map<String, Player> getPlayers() {
+		return players;
 	}
 }

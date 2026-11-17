@@ -12,7 +12,7 @@ Room, Shed, S
 Space, Unused, X
 Space, Walkway, W
 // players
-Human, h1, 14, 21
-Human, h2, 9, 12
-Computer, c1, 15, 2
-Computer, c2, 22, 8
+Human, h1, 14, 21, Red
+Human, h2, 9, 12, Blue
+Computer, c1, 15, 2, Green
+Computer, c2, 22, 8, Yellow
