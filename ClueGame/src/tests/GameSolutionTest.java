@@ -8,6 +8,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import clueGame.Board;
+import clueGame.Card;
+import clueGame.CardType;
+import clueGame.Solution;
 
 public class GameSolutionTest {
     // We make the Board static because we can load it one time and
@@ -31,25 +34,53 @@ public class GameSolutionTest {
     // Tests making a correct accusation
     @Test
     public void testCorrectAccusation() {
-        // TODO
-    }
+        // get the solution
+        Solution correct = board.getSolution();
 
-    // Tests making an accusation with the wrong person
-    @Test
-    public void testAccusationWrongPerson() {
-        // TODO
-    }
+        // make a copy of it
+        Solution accusation = new Solution(correct.getRoom(), correct.getPerson(), correct.getWeapon());
 
-    // Tests making an accusation with the wrong weapon
-    @Test
-    public void testAccusationWrongWeapon() {
-        // TODO
+        // make an accusation using the copy
+        assertTrue(board.checkAccusation(accusation));
     }
 
     // Tests making an accusation with the wrong answer
     @Test
     public void testAccusationWrongRoom() {
-        // TODO
+        // get the solution
+        Solution correct = board.getSolution();
+
+        // make an incorrect copy of it
+        Solution accusation = new Solution(new Card("", CardType.ROOM), correct.getPerson(), correct.getWeapon());
+
+        // make an accusation using the copy
+        assertTrue(board.checkAccusation(accusation));
+    }
+
+    // Tests making an accusation with the wrong person
+    @Test
+    public void testAccusationWrongPerson() {
+        // get the solution
+        Solution correct = board.getSolution();
+
+        // make an incorrect copy of it
+        Solution accusation = new Solution(correct.getRoom(), new Card("", CardType.PERSON), correct.getWeapon());
+
+        // make an accusation using the copy
+        assertTrue(board.checkAccusation(accusation));
+    }
+
+    // Tests making an accusation with the wrong weapon
+    @Test
+    public void testAccusationWrongWeapon() {
+        // get the solution
+        Solution correct = board.getSolution();
+
+        // make an incorrect copy of it
+        Solution accusation = new Solution(correct.getRoom(), correct.getPerson(), new Card("", CardType.WEAPON));
+
+        // make an accusation using the copy
+        assertTrue(board.checkAccusation(accusation));
     }
 
 
