@@ -426,4 +426,8 @@ public class Board {
 	public Map<String, Card> getDeck() {
 		return deck;
 	}
+	
+	public Solution getSolution() {
+		return theAnswer;
+	}
 }

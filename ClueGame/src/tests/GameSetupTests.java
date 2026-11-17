@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.ArrayList;
 
 import clueGame.Board;
@@ -79,15 +80,53 @@ public class GameSetupTests {
 		assertTrue(deck.get("Big stick").equals(new Card("Big stick", CardType.WEAPON)));
 	}
 
-	// test that the solution was dealt
+	// test that the solution was dealt correctly and the rest of the deal was correct
 	@Test
-	public void testDealSolution() {
-		// TODO
+	public void testDeal() {
+		// Solution Testing
+		
+		// Makes sure that the three cards are 1 weapon, 1 person, and 1 room
+		// This also makes sure that we have three cards in the solution at all
+		
+		Solution solution = board.getSolution();
+		
+		assertEquals(solution.getPerson().getCardType(), CardType.PERSON);
+		assertEquals(solution.getRoom().getCardType(), CardType.ROOM);
+		assertEquals(solution.getWeapon().getCardType(), CardType.WEAPON);
+		
+		// Checks that every player gets an equal or roughly equal (+- 1) number of cards
+		
+		Map<String, Player> players = board.getPlayers();
+		
+		int handSize;
+		int maxSize = 0;
+		
+		for (Player player : players.values()) { // This would probably fail if there were hand sizes of like 3, 4, 5, 6, but because of the way we deal cards players[0] will have the biggest hand size
+			handSize = player.getHand().size();
+			if (handSize > maxSize) {
+				maxSize = handSize;
+			}
+			
+			assertTrue((maxSize - handSize) <= 1);
+		}
+		
+		// Checks that all cards are in a unique hand
+		
+		HashSet<Card> inHand = new HashSet<>();
+		
+		for (Player player : players.values()) {
+			for (Card card : player.getHand()) {
+				assertFalse(inHand.contains(card));
+				inHand.add(card);
+			}
+		}
+		
+		// Checks that the solution cards are not in a hand
+		
+		assertFalse(inHand.contains(solution.getPerson()));
+		assertFalse(inHand.contains(solution.getRoom()));
+		assertFalse(inHand.contains(solution.getWeapon()));
 	}
 
-	// test that the other cards are dealt to the players
-	@Test
-	public void testDealCardsToPlayers() {
-		// TODO
-	}
+
 }
