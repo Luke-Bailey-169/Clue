@@ -23,3 +23,5 @@ Weapon, Potion of owie
 Weapon, Huuuuge pitcher plant
 Weapon, Big stick
 Weapon, Shovel
+Weapon, Super stinky fertilizer
+Weapon, Very evil mushroom
