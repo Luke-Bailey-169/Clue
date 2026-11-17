@@ -50,7 +50,8 @@ public class Board {
 	public void initialize() {
 		this.targets = new HashSet<BoardCell>();
 		this.visited = new HashSet<BoardCell>();
-		this.players = new HashMap<String, Player>();
+
+		
 
 		try {
 			loadSetupConfig();
@@ -60,6 +61,7 @@ public class Board {
 			return;
 		}
 
+		deal();
 		setAdjacencies();
 	}
 
@@ -85,6 +87,9 @@ public class Board {
 	 * loads the setup config
 	 */
 	public void loadSetupConfig() throws FileNotFoundException, BadConfigFormatException {
+		this.players = new HashMap<String, Player>();
+		this.deck = new HashMap<String, Card>();
+
 		// initialize the roomMap
 		roomMap = new HashMap<Character, Room>();
 
@@ -95,18 +100,52 @@ public class Board {
 			while (reader.hasNextLine()) {
 				String[] line = reader.nextLine().split(", ");
 
-				if (line.length == 1) {
-					continue;
-				}
+				// if (line.length == 1) {
+				// 	continue;
+				// }
 
-				if (!line[0].equals("//")) {
-					// Check for correct formatting
-					if (!line[0].equals("Room") && !line[0].equals("Space")) {
+				
+
+				if (line[0].charAt(0) != '/') {
+					if (line[0].equals("Room") && line.length == 3) {
+						// make a room
+						Room room = new Room(line[1]);
+						roomMap.put(line[2].charAt(0), room);
+
+						// make a card
+						Card card = new Card(line[1], CardType.ROOM);
+						deck.put(line[1], card);
+
+					} else if (line[0].equals("Space") && line.length == 3) {
+						// make a room
+						Room room = new Room(line[1]);
+						roomMap.put(line[2].charAt(0), room);
+
+					} else if (line[0].equals("Person") && line.length == 6) {
+						// make a player
+						Player player;
+						if (line[1].equals("Human")) {
+							// make a human player
+							player = new HumanPlayer(line[2], line[5], Integer.parseInt(line[3]), Integer.parseInt(line[4]));
+						} else {
+							// make a computer player
+							player = new ComputerPlayer(line[2], line[5], Integer.parseInt(line[3]), Integer.parseInt(line[4]));
+						}
+						players.put(line[2], player);
+
+						// make a card
+						Card card = new Card(line[2], CardType.PERSON);
+						deck.put(line[2], card);
+
+					} else if (line[0].equals("Weapon") && line.length == 2) {
+						// make a card
+						Card card = new Card(line[1], CardType.WEAPON);
+						deck.put(line[1], card);
+
+					} else {
+						// if formatting is wrong
 						throw new BadConfigFormatException("Setup file formatted incorrectly");
 					}
-					// make a room
-					Room room = new Room(line[1]);
-					roomMap.put(line[2].charAt(0), room);
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -308,6 +347,66 @@ public class Board {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Deals the cards to the various players, and sets the solution
+	 */
+	public void deal() {
+		// create shuffled deck
+		ArrayList<String> shuffled = new ArrayList<String>();
+		for (String cardName : deck.keySet()) {
+			shuffled.add(cardName);
+		}
+
+		// create the solution
+
+		int r;
+
+		// get the solution room
+		do {
+			r = (int) (Math.random() * shuffled.size());
+		} while (deck.get(shuffled.get(r)).getCardType() != CardType.ROOM);
+		Card room = deck.get(shuffled.get(r));
+		shuffled.remove(r);
+
+		System.out.println("got room");
+		
+		// get the solution person
+		do {
+			r = (int) (Math.random() * shuffled.size());
+		} while (deck.get(shuffled.get(r)).getCardType() != CardType.PERSON);
+		Card person = deck.get(shuffled.get(r));
+		shuffled.remove(r);
+
+		System.out.println("got person");
+
+		// get the solution weapon
+		do {
+			r = (int) (Math.random() * shuffled.size());
+		} while (deck.get(shuffled.get(r)).getCardType() != CardType.WEAPON);
+		Card weapon = deck.get(shuffled.get(r));
+		shuffled.remove(r);
+
+		theAnswer = new Solution(room, person, weapon);
+
+
+		System.out.println("got weapon");
+
+		// deal the rest of the deck
+
+		ArrayList<String> playerNames = new ArrayList<String>();
+		for (String p : players.keySet()) {
+			playerNames.add(p);
+		}
+
+		for (int i = 0; shuffled.size() > 0; i = (i + 1) % playerNames.size()) {
+			r = (int) (Math.random() * shuffled.size());
+			players.get(playerNames.get(i)).updateHand(deck.get(shuffled.get(r)));
+			shuffled.remove(r);
+		}
+
+		System.out.println("finished");
 	}
 
 	/**

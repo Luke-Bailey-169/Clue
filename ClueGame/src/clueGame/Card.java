@@ -10,7 +10,10 @@ public class Card {
 	}
 
 	public boolean equals(Card target) {
-		return this.cardName == target.getCardName();
+		return (
+			this.cardName.equals(target.getCardName()) &&
+			this.cardType == target.getCardType()
+		);
 	}
 
 	public String getCardName() { return cardName; }
