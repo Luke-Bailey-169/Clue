@@ -100,11 +100,6 @@ public class Board {
 			while (reader.hasNextLine()) {
 				String[] line = reader.nextLine().split(", ");
 
-				// if (line.length == 1) {
-				// 	continue;
-				// }
-
-				
 
 				if (line[0].charAt(0) != '/') {
 					if (line[0].equals("Room") && line.length == 3) {
@@ -444,6 +439,16 @@ public class Board {
 		}
 
 		visited.remove(currentCell);  // remove the current cell from visited
+	}
+
+	/**
+	 * Returns true if accusation matches theAnswer (i.e. the player guessed who did it, where and with what).
+	 * 
+	 * @param accusation A Solution instance containing the accusation
+	 * @return true if the accusation is correct
+	 */
+	public boolean checkAccusation(Solution accusation) {
+		return theAnswer.equals(accusation);
 	}
 
 

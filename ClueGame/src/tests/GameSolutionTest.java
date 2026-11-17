@@ -54,7 +54,7 @@ public class GameSolutionTest {
         Solution accusation = new Solution(new Card("", CardType.ROOM), correct.getPerson(), correct.getWeapon());
 
         // make an accusation using the copy
-        assertTrue(board.checkAccusation(accusation));
+        assertFalse(board.checkAccusation(accusation));
     }
 
     // Tests making an accusation with the wrong person
@@ -67,7 +67,7 @@ public class GameSolutionTest {
         Solution accusation = new Solution(correct.getRoom(), new Card("", CardType.PERSON), correct.getWeapon());
 
         // make an accusation using the copy
-        assertTrue(board.checkAccusation(accusation));
+        assertFalse(board.checkAccusation(accusation));
     }
 
     // Tests making an accusation with the wrong weapon
@@ -80,7 +80,7 @@ public class GameSolutionTest {
         Solution accusation = new Solution(correct.getRoom(), correct.getPerson(), new Card("", CardType.WEAPON));
 
         // make an accusation using the copy
-        assertTrue(board.checkAccusation(accusation));
+        assertFalse(board.checkAccusation(accusation));
     }
 
 
