@@ -25,18 +25,78 @@ public class GameSolutionTest {
 		board.initialize();
 	}
 
+
+    // Accusation tests
+
+    // Tests making a correct accusation
     @Test
-    public void testCheckAccusation() {
+    public void testCorrectAccusation() {
         // TODO
     }
 
+    // Tests making an accusation with the wrong person
     @Test
-    public void testDisproveSuggestion() {
+    public void testAccusationWrongPerson() {
         // TODO
     }
 
+    // Tests making an accusation with the wrong weapon
     @Test
-    public void testHandleSuggestion() {
+    public void testAccusationWrongWeapon() {
+        // TODO
+    }
+
+    // Tests making an accusation with the wrong answer
+    @Test
+    public void testAccusationWrongRoom() {
+        // TODO
+    }
+
+
+    // Disprove Suggestion tests
+
+    // If player has only one matching card it should be returned
+    @Test
+    public void testDisproveSuggestionOneMatchingCard() {
+        // TODO
+    }
+
+    // If players has >1 matching card, returned card should be chosen randomly
+    @Test
+    public void testDisproveSuggestionMultipleMatchingCards() {
+        // TODO
+    }
+
+    // If player has no matching cards, null should be returned
+    @Test
+    public void testDisproveSuggestionNoMatchingCards() {
+        // TODO
+    }
+
+
+    // Handle Suggestion tests
+
+    // Suggestion no one can disprove should return null
+    @Test
+    public void testSuggestionCannotDisprove() {
+        // TODO
+    }
+
+    // Suggestion only suggesting player can disprove should return null
+    @Test
+    public void testSuggestionSuggestingDisprove() {
+        // TODO
+    }
+
+    // Suggestion only human can disprove should return answer (i.e., card that disproves suggestion)
+    @Test
+    public void testSuggestionHumanDisprove() {
+        // TODO
+    }
+
+    // Suggestion that two players can disprove, correct player (based on starting with next player in list) returns answer
+    @Test
+    public void testSuggestionTwoPlayersDisprove() {
         // TODO
     }
 }
