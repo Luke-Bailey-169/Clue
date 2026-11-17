@@ -29,6 +29,9 @@ public class Board {
 	// map of player names and players
 	private Map<String, Player> players;
 
+	private Solution theAnswer;
+	private Map<String, Card> deck;
+
 	/*
 	 * variable and methods used for singleton pattern
 	 */
@@ -418,5 +421,9 @@ public class Board {
 
 	public Map<String, Player> getPlayers() {
 		return players;
+	}
+
+	public Map<String, Card> getDeck() {
+		return deck;
 	}
 }
