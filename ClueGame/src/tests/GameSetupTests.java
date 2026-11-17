@@ -8,9 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.ArrayList;
 
 import clueGame.Board;
 import clueGame.Player;

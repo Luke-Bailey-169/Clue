@@ -369,8 +369,6 @@ public class Board {
 		} while (deck.get(shuffled.get(r)).getCardType() != CardType.ROOM);
 		Card room = deck.get(shuffled.get(r));
 		shuffled.remove(r);
-
-		System.out.println("got room");
 		
 		// get the solution person
 		do {
@@ -378,8 +376,6 @@ public class Board {
 		} while (deck.get(shuffled.get(r)).getCardType() != CardType.PERSON);
 		Card person = deck.get(shuffled.get(r));
 		shuffled.remove(r);
-
-		System.out.println("got person");
 
 		// get the solution weapon
 		do {
@@ -390,8 +386,6 @@ public class Board {
 
 		theAnswer = new Solution(room, person, weapon);
 
-
-		System.out.println("got weapon");
 
 		// deal the rest of the deck
 
@@ -405,8 +399,6 @@ public class Board {
 			players.get(playerNames.get(i)).updateHand(deck.get(shuffled.get(r)));
 			shuffled.remove(r);
 		}
-
-		System.out.println("finished");
 	}
 
 	/**
