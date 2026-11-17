@@ -16,3 +16,8 @@ Human, h1, 14, 21, Red
 Human, h2, 9, 12, Blue
 Computer, c1, 15, 2, Green
 Computer, c2, 22, 8, Yellow
+// weapons
+Weapon, Potion of owie
+Weapon, Huuuuge pitcher plant
+Weapon, Big stick
+Weapon, Shovel
