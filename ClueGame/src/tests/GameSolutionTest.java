@@ -11,6 +11,7 @@ import clueGame.Board;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.Solution;
+import clueGame.HumanPlayer;
 
 public class GameSolutionTest {
     // We make the Board static because we can load it one time and
@@ -89,7 +90,23 @@ public class GameSolutionTest {
     // If player has only one matching card it should be returned
     @Test
     public void testDisproveSuggestionOneMatchingCard() {
-        // TODO
+        // Create a player with a known hand
+        HumanPlayer player = new HumanPlayer("", "", 0, 0);
+
+        Card matching = new Card("room", CardType.ROOM);
+        player.updateHand(matching);
+        player.updateHand(new Card("person", CardType.PERSON));
+        player.updateHand(new Card("weapon", CardType.WEAPON));
+
+        
+        // cards for the suggestion
+        Card r = new Card("room", CardType.ROOM);
+        Card p = new Card("", CardType.PERSON);
+        Card w = new Card("", CardType.WEAPON);
+
+        // get the disproving card, and make sure it is the correct card
+        Card c = player.disproveSuggestion(new Solution(r, p, w));
+        assertTrue(matching.equals(c));
     }
 
     // If players has >1 matching card, returned card should be chosen randomly
