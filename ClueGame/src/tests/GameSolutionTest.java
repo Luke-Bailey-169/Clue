@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+import java.util.HashSet;
+
 import clueGame.Board;
 import clueGame.Card;
 import clueGame.CardType;
@@ -97,28 +100,79 @@ public class GameSolutionTest {
         player.updateHand(matching);
         player.updateHand(new Card("person", CardType.PERSON));
         player.updateHand(new Card("weapon", CardType.WEAPON));
-
+        
         
         // cards for the suggestion
         Card r = new Card("room", CardType.ROOM);
         Card p = new Card("", CardType.PERSON);
         Card w = new Card("", CardType.WEAPON);
 
-        // get the disproving card, and make sure it is the correct card
-        Card c = player.disproveSuggestion(new Solution(r, p, w));
-        assertTrue(matching.equals(c));
+        Set<Card> matchedCards = new HashSet<Card>();
+
+        // get the disproving cards
+        for (int i = 0; i < 100; i++) {
+            matchedCards.add(player.disproveSuggestion(new Solution(r, p, w)));
+        }
+        
+        assertEquals(matchedCards.size(), 1);
+        assertTrue(matchedCards.contains(matching));
     }
 
     // If players has >1 matching card, returned card should be chosen randomly
     @Test
     public void testDisproveSuggestionMultipleMatchingCards() {
-        // TODO
+        // Create a player with a known hand
+        HumanPlayer player = new HumanPlayer("", "", 0, 0);
+
+        player.updateHand(new Card("room", CardType.ROOM));
+        Card matching1 = new Card("person", CardType.PERSON);
+        player.updateHand(matching1);
+        Card matching2 = new Card("weapon", CardType.WEAPON);
+        player.updateHand(matching2);
+
+        
+        // cards for the suggestion
+        Card r = new Card("", CardType.ROOM);
+        Card p = new Card("person", CardType.PERSON);
+        Card w = new Card("weapon", CardType.WEAPON);
+
+        Set<Card> matchedCards = new HashSet<Card>();
+
+        // get the disproving cards
+        for (int i = 0; i < 100; i++) {
+            matchedCards.add(player.disproveSuggestion(new Solution(r, p, w)));
+        }
+        
+        assertEquals(matchedCards.size(), 2);
+        assertTrue(matchedCards.contains(matching1));
+        assertTrue(matchedCards.contains(matching2));
     }
 
     // If player has no matching cards, null should be returned
     @Test
     public void testDisproveSuggestionNoMatchingCards() {
-        // TODO
+        // Create a player with a known hand
+        HumanPlayer player = new HumanPlayer("", "", 0, 0);
+
+        player.updateHand(new Card("room", CardType.ROOM));
+        player.updateHand(new Card("person", CardType.PERSON));
+        player.updateHand(new Card("weapon", CardType.WEAPON));
+
+        
+        // cards for the suggestion
+        Card r = new Card("", CardType.ROOM);
+        Card p = new Card("", CardType.PERSON);
+        Card w = new Card("", CardType.WEAPON);
+
+        Set<Card> matchedCards = new HashSet<Card>();
+
+        // get the disproving cards
+        for (int i = 0; i < 100; i++) {
+            matchedCards.add(player.disproveSuggestion(new Solution(r, p, w)));
+        }
+        
+        assertEquals(matchedCards.size(), 1);
+        assertTrue(matchedCards.contains(null));
     }
 
 

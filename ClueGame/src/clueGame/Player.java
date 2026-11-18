@@ -19,8 +19,35 @@ public abstract class Player {
 		this.hand = new ArrayList<Card>();
 	}
 
+	/**
+	 * Adds the card the player's hand
+	 * 
+	 * @param card
+	 */
 	public void updateHand(Card card) {
 		hand.add(card);
+	}
+
+	/**
+	 * A player tries to dispute a suggestion with the cards in their hand.
+	 * If the player cannot, null is returned.
+	 * If a player can, the player returns the card.
+	 * If is more than one card that can dispute the suggestion, one is randomly chosen.
+	 * 
+	 * @param suggestion
+	 * @return A card that would disprove the suggestion
+	 */
+	public Card disproveSuggestion(Solution suggestion) {
+		ArrayList<Card> disprovingCards = new ArrayList<Card>();
+
+		for (Card card : hand) {
+			if (card.equals(suggestion.getRoom()) || card.equals(suggestion.getPerson()) || card.equals(suggestion.getWeapon())) {
+				disprovingCards.add(card);
+			}
+		}
+
+		int r = (int) (Math.random() * disprovingCards.size());
+		return (disprovingCards.size() > 0) ? disprovingCards.get(r) : null;
 	}
 
 	public abstract boolean isHuman();
