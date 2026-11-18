@@ -179,7 +179,6 @@ public class GameSolutionTest {
     public void testSuggestionCannotDisprove() {
         Map<String, Player> players = board.getPlayers();
 
-
         assertEquals(board.handleSuggestion(players.get("h1"), answer), null);
     }
 
@@ -197,7 +196,7 @@ public class GameSolutionTest {
             answer.getWeapon()
         );
 
-        assertEquals(board.handleSuggestion(players.get("h1"), suggestion), null);
+        assertEquals(board.handleSuggestion(player1, suggestion), null);
     }
 
     // Suggestion only human can disprove should return answer (i.e., card that disproves suggestion)
@@ -233,6 +232,6 @@ public class GameSolutionTest {
             answer.getWeapon()
         );
 
-        assertTrue(board.handleSuggestion(players.get("h2"), suggestion).equals(new Card("p1 card", CardType.ROOM)));
+        assertTrue(board.handleSuggestion(players.get("h3"), suggestion).equals(new Card("p1 card", CardType.ROOM)));
     }
 }

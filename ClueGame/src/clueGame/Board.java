@@ -451,7 +451,24 @@ public class Board {
 		return theAnswer.equals(accusation);
 	}
 
+	/**
+	 * Process all the players in turn, each to see if they can dispute the suggestion.
+	 * 
+	 * @param suggestingPlayer The player making the suggestion
+	 * @param suggestion The suggestion being made
+	 * @return The first card that that disputed the suggestion. If suggestion cannot be disputed, returns null
+	 */
 	public Card handleSuggestion(Player suggestingPlayer, Solution suggestion) {
+		for (String p : players.keySet()) {
+			if (!p.equals(suggestingPlayer.getName())) {
+				Card disputeCard = players.get(p).disproveSuggestion(suggestion);
+
+				if (disputeCard != null) {
+					return disputeCard;
+				}
+			}
+		}
+
 		return null;
 	}
 
