@@ -10,12 +10,10 @@ import org.junit.jupiter.api.Test;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.HashMap;
 
 import clueGame.Board;
 import clueGame.Card;
 import clueGame.CardType;
-import clueGame.ComputerPlayer;
 import clueGame.Solution;
 import clueGame.HumanPlayer;
 import clueGame.Player;
