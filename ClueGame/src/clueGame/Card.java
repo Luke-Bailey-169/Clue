@@ -1,5 +1,10 @@
 package clueGame;
 
+/**
+ * @author Ryan Steinglass
+ * 
+ * Card
+ */
 public class Card {
 	private String cardName;
 	private CardType cardType;

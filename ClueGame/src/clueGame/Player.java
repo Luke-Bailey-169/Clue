@@ -2,6 +2,11 @@ package clueGame;
 
 import java.util.ArrayList;
 
+/**
+ * @author Ryan Steinglass
+ * 
+ * Player
+ */
 public abstract class Player {
 	private String name;
 	private String color;

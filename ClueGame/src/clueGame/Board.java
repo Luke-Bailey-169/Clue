@@ -12,6 +12,7 @@ import java.util.HashSet;
 
 /**
  * @author Ryan Steinglass
+ * @author Luke Bailey
  * 
  * Board
  */
