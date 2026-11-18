@@ -451,6 +451,10 @@ public class Board {
 		return theAnswer.equals(accusation);
 	}
 
+	public Card handleSuggestion(Player suggestingPlayer, Solution suggestion) {
+		return null;
+	}
+
 
 	/*
 	--------------------------------------------------
