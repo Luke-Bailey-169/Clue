@@ -41,29 +41,29 @@ public class GameSetupTests {
 		assertEquals(players.size(), 6);
 
 		// check if each player's name, color, location, and type (human/computer) is loaded correct
-		assertTrue(players.containsKey("h1"));
-		assertTrue(players.get("h1").isHuman());
-		assertTrue(players.get("h1").getColor().equals("Red"));
-		assertEquals(players.get("h1").getRow(), 14);
-		assertEquals(players.get("h1").getCol(), 21);
+		assertTrue(players.containsKey("Crazy Dave"));
+		assertTrue(players.get("Crazy Dave").isHuman());
+		assertTrue(players.get("Crazy Dave").getColor().equals("Red"));
+		assertEquals(players.get("Crazy Dave").getRow(), 14);
+		assertEquals(players.get("Crazy Dave").getCol(), 21);
 
-		assertTrue(players.containsKey("h2"));
-		assertTrue(players.get("h2").isHuman());
-		assertTrue(players.get("h2").getColor().equals("Blue"));
-		assertEquals(players.get("h2").getRow(), 9);
-		assertEquals(players.get("h2").getCol(), 12);
+		assertTrue(players.containsKey("Potionseller"));
+		assertTrue(players.get("Potionseller").isHuman());
+		assertTrue(players.get("Potionseller").getColor().equals("Blue"));
+		assertEquals(players.get("Potionseller").getRow(), 9);
+		assertEquals(players.get("Potionseller").getCol(), 12);
 
-		assertTrue(players.containsKey("c1"));
-		assertFalse(players.get("c1").isHuman());
-		assertTrue(players.get("c1").getColor().equals("Green"));
-		assertEquals(players.get("c1").getRow(), 15);
-		assertEquals(players.get("c1").getCol(), 2);
+		assertTrue(players.containsKey("Not so Crazy Dave"));
+		assertFalse(players.get("Not so Crazy Dave").isHuman());
+		assertTrue(players.get("Not so Crazy Dave").getColor().equals("Green"));
+		assertEquals(players.get("Not so Crazy Dave").getRow(), 15);
+		assertEquals(players.get("Not so Crazy Dave").getCol(), 2);
 
-		assertTrue(players.containsKey("c2"));
-		assertFalse(players.get("c2").isHuman());
-		assertTrue(players.get("c2").getColor().equals("Yellow"));
-		assertEquals(players.get("c2").getRow(), 22);
-		assertEquals(players.get("c2").getCol(), 8);
+		assertTrue(players.containsKey("Traveler"));
+		assertFalse(players.get("Traveler").isHuman());
+		assertTrue(players.get("Traveler").getColor().equals("Yellow"));
+		assertEquals(players.get("Traveler").getRow(), 22);
+		assertEquals(players.get("Traveler").getCol(), 8);
 	}
 
 	// test that the deck of all cards was created (composed of 9 rooms, 6 weapons, and 6 people)
@@ -74,7 +74,7 @@ public class GameSetupTests {
 		assertEquals(deck.size(), 21);
 
 		assertTrue(deck.get("Fountain").equals(new Card("Fountain", CardType.ROOM)));
-		assertTrue(deck.get("h2").equals(new Card("h2", CardType.PERSON)));
+		assertTrue(deck.get("Potionseller").equals(new Card("Potionseller", CardType.PERSON)));
 		assertTrue(deck.get("Big stick").equals(new Card("Big stick", CardType.WEAPON)));
 	}
 

@@ -177,14 +177,14 @@ public class GameSolutionTest {
     public void testSuggestionCannotDisprove() {
         Map<String, Player> players = board.getPlayers();
 
-        assertEquals(board.handleSuggestion(players.get("h1"), answer), null);
+        assertEquals(board.handleSuggestion(players.get("Crazy Dave"), answer), null);
     }
 
     // Suggestion only suggesting player can disprove should return null
     @Test
     public void testSuggestionOnlySuggestingDisprove() {
         Map<String, Player> players = board.getPlayers();
-        Player player1 = players.get("h1");
+        Player player1 = players.get("Crazy Dave");
 
         player1.updateHand(new Card("p1 card", CardType.ROOM));
 
@@ -201,7 +201,7 @@ public class GameSolutionTest {
     @Test
     public void testSuggestionHumanDisprove() {
         Map<String, Player> players = board.getPlayers();
-        Player player1 = players.get("h1");
+        Player player1 = players.get("Crazy Dave");
 
         player1.updateHand(new Card("p1 card", CardType.ROOM));
 
@@ -211,15 +211,15 @@ public class GameSolutionTest {
             answer.getWeapon()
         );
 
-        assertTrue(board.handleSuggestion(players.get("h2"), suggestion).equals(new Card("p1 card", CardType.ROOM)));
+        assertTrue(board.handleSuggestion(players.get("Potionseller"), suggestion).equals(new Card("p1 card", CardType.ROOM)));
     }
 
     // Suggestion that two players can disprove, answer player (based on starting with next player in list) returns answer
     @Test
     public void testSuggestionTwoPlayersDisprove() {
         Map<String, Player> players = board.getPlayers();
-        Player player1 = players.get("h1");
-        Player player2 = players.get("h2");
+        Player player1 = players.get("Crazy Dave");
+        Player player2 = players.get("Potionseller");
 
         player1.updateHand(new Card("p1 card", CardType.ROOM));
         player2.updateHand(new Card("p2 card", CardType.PERSON));
@@ -230,6 +230,6 @@ public class GameSolutionTest {
             answer.getWeapon()
         );
 
-        assertTrue(board.handleSuggestion(players.get("h3"), suggestion).equals(new Card("p1 card", CardType.ROOM)));
+        assertTrue(board.handleSuggestion(players.get("Meganium"), suggestion).equals(new Card("p1 card", CardType.ROOM)));
     }
 }
