@@ -12,12 +12,12 @@ Room, Shed, S
 Space, Unused, X
 Space, Walkway, W
 // people
-Person, Human, h1, 14, 21, Red
-Person, Human, h2, 9, 12, Blue
-Person, Human, h3, 21, 16, Cyan
-Person, Computer, c1, 15, 2, Green
-Person, Computer, c2, 22, 8, Yellow
-Person, Computer, c3, 5, 17, Purple
+Person, Human, Crazy Dave, 14, 21, Red
+Person, Human, Potionseller, 9, 12, Blue
+Person, Human, Meganium, 21, 16, Cyan
+Person, Computer, Not so Crazy Dave, 15, 2, Green
+Person, Computer, Traveler, 22, 8, Yellow
+Person, Computer, Meowscarada, 5, 17, Purple
 // weapons
 Weapon, Potion of owie
 Weapon, Huuuuge pitcher plant
