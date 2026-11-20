@@ -1,22 +1,17 @@
 package tests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Map;
 
 import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.Card;
-import clueGame.CardType;
 import clueGame.ComputerPlayer;
-import clueGame.Player;
 import clueGame.Solution;
 
 public class ComputerAITest {
@@ -197,9 +192,12 @@ public class ComputerAITest {
 	}
 	
 	// Test for random movement if only enterable room has been seen
+	@Test
 	public void testRandomMovementRoom() {
 		// New player
 		ComputerPlayer compPlayer = new ComputerPlayer("test", "green", 16, 4);
+		
+		compPlayer.updateSeen(deck.get("Fountain"));
 		
 		// Set booleans to false, will be set to true when the cell is a target
 		boolean up = false;

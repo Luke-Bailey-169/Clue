@@ -4,17 +4,18 @@ import java.util.ArrayList;
 
 /**
  * @author Ryan Steinglass
+ * @author Luke Bailey
  * 
  * Player
  */
 public abstract class Player {
-	private String name;
-	private String color;
-	private int row;
-	private int col;
+	protected String name;
+	protected String color;
+	protected int row;
+	protected int col;
 
 	private ArrayList<Card> hand;
-	private ArrayList<Card> seenCards;
+	protected ArrayList<Card> seenCards;
 
 	public Player(String name, String color, int row, int col) {
 		this.name = name;
@@ -23,6 +24,7 @@ public abstract class Player {
 		this.col = col;
 
 		this.hand = new ArrayList<Card>();
+		this.seenCards = new ArrayList<Card>();
 	}
 
 	/**
@@ -62,8 +64,10 @@ public abstract class Player {
 	}
 	
 	public void suggest(Room room) {
-		// calls createSuggestion, which returns a solution
-		// use board.checkAccusation
+		Board board = Board.getInstance();
+		Solution solution = createSuggestion(room);
+		
+		board.handleSuggestion(this, solution);
 	}
 	
 	public abstract Solution createSuggestion(Room room);
